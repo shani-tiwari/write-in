@@ -29,6 +29,16 @@ input, textarea, button, select {
   font-family: inherit;
 }
 
+textarea {
+  line-height: 32px;
+
+  padding: 16px 16px;
+  background-position: 0 7px; 
+
+  background-image: repeating-linear-gradient(to bottom,transparent 0px,transparent 31px,#444444 31px,#444444 32px);
+  background-size: 100% 32px;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
