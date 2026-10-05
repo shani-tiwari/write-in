@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useState } from "react";
+import Button from "./components/ui/Button";
 
 const MAX_CHARS = 250;
 
@@ -29,8 +30,9 @@ export default function Home() {
           }),
         });
         const data = await res.json();
-        if (data.translatedText !== undefined) {
-          setTranslatedText(data.translatedText);
+        if (data.formattedText !== undefined) {
+          // switch to next line for next phrase
+          setTranslatedText(data.formattedText);
         }
       } catch (err) {
         console.error("Failed to translate:", err);
@@ -70,9 +72,10 @@ export default function Home() {
           <textarea
             readOnly
             placeholder={isLoading ? "Translating..." : "Translation (Spanish)..."}
-            className="w-full h-full font-caveat p-4 border border-black/40 bg-black/60 rounded-lg resize-none outline-none text-white/90 text-xl"
+            className="w-full h-full font-caveat  border border-black/40 bg-black/60 rounded-lg resize-none outline-none text-white/90 text-xl"
             value={translatedText}
           />
+          <Button/>
         </div>
 
       </div>

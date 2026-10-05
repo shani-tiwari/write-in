@@ -6,7 +6,7 @@ export async function POST(req: Request) {
   try {
     const { text, to = 'es' } = await req.json();
     if (!text || typeof text !== "string" || !text.trim()) { 
-      return NextResponse.json({ translatedText: "" });
+      return NextResponse.json({ formattedText: "", translatedText: "" });
     }
 
     const targetLang = encodeURIComponent(to);
@@ -20,8 +20,15 @@ export async function POST(req: Request) {
     const data = await response.json();
     // data[0] contains array of translated chunks: [[chunk1, ...], [chunk2, ...]]
     const translatedText = data?.[0]?.map((item: [string]) => item[0]).join("") || "";
-    
-    return NextResponse.json({ translatedText }, {status: 200});
+
+    // Split text whenever a dot (.) appears so each sentence starts on a fresh line
+    const formattedText = translatedText
+      .split(/(?<=\.)(?!\.)\s*/)
+      .map((line: string) => line.trim())
+      .filter(Boolean)
+      .join('\n');
+        
+    return NextResponse.json({ formattedText, translatedText }, { status: 200 });
 
   } catch (error) {
     console.error("Translation error:", error);
