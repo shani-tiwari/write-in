@@ -69,13 +69,18 @@ export default function Home() {
 
         {/* spanish translated text area */}
         <div className="w-1/2 h-full flex flex-col relative">
+
           <textarea
             readOnly
             placeholder={isLoading ? "Translating..." : "Translation (Spanish)..."}
             className="w-full h-full font-caveat  border border-black/40 bg-black/60 rounded-lg resize-none outline-none text-white/90 text-xl"
             value={translatedText}
           />
-          <Button/>
+
+          <div className="absolute top-3 right-3 w-fit h-fit">
+            <Button textToCopy={translatedText} />
+          </div>
+
         </div>
 
       </div>
