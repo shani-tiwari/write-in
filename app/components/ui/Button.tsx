@@ -38,7 +38,7 @@ export default function Button({ textToCopy }: ButtonProps) {
         layout
         // transition={{ layout: { duration: 0.25, ease: "easeOut" } }}
         className={cn(
-          "flex items-center justify-center px-2 py-2 rounded-full border border-dashed border-white/60 bg-black/50 backdrop-blur-lg hover:bg-black/70 transition-colors cursor-pointer select-none text-white/90",
+          "flex items-center justify-center p-1.5 md:p-2 rounded-full border border-dashed border-white/60 bg-black/50 backdrop-blur-lg hover:bg-black/70 transition-colors cursor-pointer select-none text-white/90",
         )}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
@@ -53,7 +53,7 @@ export default function Button({ textToCopy }: ButtonProps) {
               animate={{ width: 44, opacity: 1, filter: "blur(0px)" }} 
               exit={{ width: 0, opacity: 0, filter: "blur(4px)" }}
               transition={{ duration: 0.25, ease: "easeOut" }}
-              className="overflow-hidden whitespace-nowrap text-xs font-sans font-medium "  // had padding - making glitch effect
+              className="hidden md:block overflow-hidden whitespace-nowrap text-xs font-sans font-medium "  // had padding - making glitch effect
             >
               {copied ? "Copied" : "Copy..."}
             </motion.span>

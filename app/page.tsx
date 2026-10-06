@@ -70,11 +70,11 @@ export default function Home() {
     <main className="w-screen h-screen bg-gray-300 flex items-center justify-center md:p-4 select-none">
       <div id="container" className="w-full h-full bg-gray-200/60 rounded-xl flex flex-col p-2 md:p-4 gap-2 md:gap-4 font-handlee">
 
-        <header className="flex gap-6 justify-around items-center text-black/80 font-merienda">
-          <h1 className="text-sm md:text-base text-center bg-white">
+        <header className="flex gap-6 justify-around items-center text-xs md:text-base text-black/80 font-merienda">
+          <h1 className=" bg-white">
             Write what you think. 
           </h1>
-          <p className="text-sm md:text-base text-center bg-white">
+          <p className="hidden md:block bg-white">
             Your thoughts, translated into your next language.
           </p>
           <span className="bg-white">
@@ -82,11 +82,8 @@ export default function Home() {
           </span>
         </header>
 
-        {/* languages */}
-        <div className="relative flex flex-row w-full justify-center items-center gap-2 md:gap-3">
-          {/* <div className="community">
-            <Link href=''>Join Community</Link>
-          </div>  */}
+        {/* languages options */}
+        <div className="relative flex w-full md:justify-center items-center gap-2 md:gap-3 ">
           {
             languages.map((language) => (
               <button
@@ -97,7 +94,7 @@ export default function Home() {
                   }
                   setTargetLanguage(language.code);
                 }}
-                className={`px-3 py-0.5 rounded-lg transition-colors text-sm md:text-base ${
+                className={`px-2 md:px-3 py-0.5 rounded-lg transition-colors text-xs md:text-base ${
                   language.code === targetLanguage
                     ? "bg-black/80 text-white" // Active state: Darker background, white text
                     : "bg-black/40 text-white/70 hover:bg-black/60 hover:text-white/90"
@@ -107,7 +104,7 @@ export default function Home() {
               </button>
             ))
           }
-          <div className="socials absolute right-0  flex gap-4 ">
+          <div className="socials absolute right-0  flex md:gap-4 ">
             <Link href='https://x.com/shanidevelops' target="_blank">
               <HugeiconsIcon icon={Twitter} size={22} className="text-black/50" />
             </Link>
@@ -118,14 +115,14 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="flex md:flex-row flex-col justify-between w-full h-full gap-4 md:text-xl">
+        <div className="flex md:flex-row flex-col justify-between w-full h-full gap-1.5 md:gap-4 md:text-xl">
 
           {/* english text area */}
           <div className="w-full md:w-1/2 h-full flex flex-col relative">
             <textarea
               placeholder="what's in your mind today ?"
               maxLength={MAX_CHARS}
-              className="w-full h-full font-caveat border-2 border-black/30 bg-white/10 rounded-lg resize-none outline-none text-black"
+              className="w-full h-full px-2 py-4 md:p-4 font-caveat border-2 border-black/30 bg-white/10 rounded-lg resize-none outline-none text-black"
               value={text}
               onChange={(e) => {
                 if (e.target.value.length <= MAX_CHARS) {
@@ -133,7 +130,7 @@ export default function Home() {
                 }
               }}
             />
-            <div className="absolute bottom-3 right-3 text-sm text-black/70 bg-white/80 select-none pointer-events-none">
+            <div className="absolute bottom-3 right-3 text-sm text-black/70 bg-white/80 leading-5 select-none pointer-events-none">
               {text.length}/{MAX_CHARS}
             </div>
           </div>
@@ -144,7 +141,7 @@ export default function Home() {
             <textarea
               readOnly
               placeholder={isLoading ? "Translating..." : "you didn't write anything yet 🫠"}
-              className="w-full h-full font-caveat  border-2 border-black/30 bg-white/10 rounded-lg resize-none outline-none text-black/80"
+              className="w-full h-full px-2 py-4 md:p-4 font-caveat  border-2 border-black/30 bg-white/10 rounded-lg resize-none outline-none text-black/80"
               value={translatedText}
             />
 

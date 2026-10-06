@@ -31,8 +31,6 @@ input, textarea, button, select {
 
 textarea {
   line-height: 32px;
-
-  padding: 16px 16px;
   background-position: 0 7px; 
 
   background-image: repeating-linear-gradient(to bottom,transparent 0px,transparent 31px,#898989 31px,#898989 32px);
