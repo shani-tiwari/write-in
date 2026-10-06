@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import Button from "./components/ui/Button";
 import { translateText } from "@/services/translateService";
-import { speakText } from "@/services/speakService";
+// import { speakText } from "@/services/speakService";
 
 const MAX_CHARS = 250;
 const languages = [
@@ -15,6 +15,7 @@ const languages = [
 
 
 export default function Home() {
+  
   const [text, setText] = useState('');
   const [translatedText, setTranslatedText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -63,7 +64,19 @@ export default function Home() {
 
   return (
     <main className="w-screen h-screen bg-gray-300 flex items-center justify-center md:p-4">
-      <div id="container" className="w-full h-full bg-gray-200/60 rounded-xl flex flex-col p-2 md:p-4 gap-4 font-handlee">
+      <div id="container" className="w-full h-full bg-gray-200/60 rounded-xl flex flex-col p-2 md:p-4 gap-2 md:gap-4 font-handlee">
+
+        <header className="flex gap-6 justify-around items-center text-black/80 font-merienda">
+          <h1 className="text-sm md:text-base text-center bg-white">
+            Write what you think. 
+          </h1>
+          <p className="text-sm md:text-base text-center bg-white">
+            Your thoughts, translated into your next language.
+          </p>
+          <span className="bg-white">
+            Learn how to say it. 
+          </span>
+        </header>
 
         {/* languages */}
         <div className="flex flex-row w-full justify-center gap-2 md:gap-3">
@@ -119,11 +132,11 @@ export default function Home() {
               value={translatedText}
             />
 
-            <div className="absolute top-14 right-3 w-fit h-fit">
+            {/* <div className="absolute top-14 right-3 w-fit h-fit">
               <button onClick={() => speakText(translatedText, languages.find((l) => l.code === targetLanguage)?.speak || "en-ES" )}>
                 🔊 
               </button>
-            </div>
+            </div> */}
 
             <div className="absolute top-3 right-3 w-fit h-fit">
               <Button textToCopy={translatedText} />
