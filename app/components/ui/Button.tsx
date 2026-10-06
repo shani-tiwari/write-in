@@ -38,7 +38,7 @@ export default function Button({ textToCopy }: ButtonProps) {
         layout
         // transition={{ layout: { duration: 0.25, ease: "easeOut" } }}
         className={cn(
-          "flex items-center justify-center px-2 py-2 rounded-full border border-dashed border-white/60 bg-black/50 hover:bg-black/70 transition-colors cursor-pointer select-none text-white/90",
+          "flex items-center justify-center px-2 py-2 rounded-full border border-dashed border-white/60 bg-black/50 backdrop-blur-lg hover:bg-black/70 transition-colors cursor-pointer select-none text-white/90",
         )}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}

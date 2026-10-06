@@ -35,7 +35,7 @@ textarea {
   padding: 16px 16px;
   background-position: 0 7px; 
 
-  background-image: repeating-linear-gradient(to bottom,transparent 0px,transparent 31px,#5b5a5a 31px,#656565 32px);
+  background-image: repeating-linear-gradient(to bottom,transparent 0px,transparent 31px,#898989 31px,#898989 32px);
   background-size: 100% 32px;
 }
 
