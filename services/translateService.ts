@@ -4,7 +4,7 @@ export interface TranslationResponse {
   error?: string;
 }
 
-const RATE_LIMIT_MS = 10000;
+const RATE_LIMIT_MS = 2000;
 let lastRequestTime = 0;
 
 /**

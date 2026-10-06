@@ -2,15 +2,17 @@
 import { useEffect, useState } from "react";
 import Button from "./components/ui/Button";
 import { translateText } from "@/services/translateService";
+import { speakText } from "@/services/speakService";
 
 const MAX_CHARS = 250;
 const languages = [
   // { code: "en", label: "English" },
-  { code: "es", label: "Spanish" },
-  { code: "fr", label: "French" },
-  { code: "de", label: "German" },
-  { code: "ja", label: "Japanese" },
+  { code: "es", label: "Spanish", speak: "es-ES" },
+  { code: "fr", label: "French", speak: "fr-FR" },
+  { code: "de", label: "German", speak: "de-DE" },
+  { code: "ja", label: "Japanese", speak: "ja-JP" },
 ];
+
 
 export default function Home() {
   const [text, setText] = useState('');
@@ -60,11 +62,11 @@ export default function Home() {
 
 
   return (
-    <main className="w-screen h-screen bg-gray-300 flex items-center justify-center p-4">
-      <div id="container" className="w-full h-full bg-gray-200/60 rounded-xl flex flex-col  p-4 gap-4 font-handlee">
+    <main className="w-screen h-screen bg-gray-300 flex items-center justify-center md:p-4">
+      <div id="container" className="w-full h-full bg-gray-200/60 rounded-xl flex flex-col p-2 md:p-4 gap-4 font-handlee">
 
         {/* languages */}
-        <div className="flex flex-row w-full justify-center gap-3">
+        <div className="flex flex-row w-full justify-center gap-2 md:gap-3">
           {
             languages.map((language) => (
               <button
@@ -75,7 +77,7 @@ export default function Home() {
                   }
                   setTargetLanguage(language.code);
                 }}
-                className={`px-3 py-1 rounded-lg transition-colors ${
+                className={`px-3 py-1 rounded-lg transition-colors text-sm md:text-base ${
                   language.code === targetLanguage
                     ? "bg-black/80 text-white" // Active state: Darker background, white text
                     : "bg-black/40 text-white/70 hover:bg-black/60 hover:text-white/90"
@@ -87,13 +89,14 @@ export default function Home() {
           }
         </div>
 
-        <div className="flex flex-row justify-between w-full h-full gap-4">
+        <div className="flex md:flex-row flex-col justify-between w-full h-full gap-4 md:text-xl">
+
           {/* english text area */}
-          <div className="w-1/2 h-full flex flex-col relative">
+          <div className="w-full md:w-1/2 h-full flex flex-col relative">
             <textarea
               placeholder="what's in your mind today ?"
               maxLength={MAX_CHARS}
-              className="w-full h-full font-caveat border border-black/40 bg-black/50 rounded-lg resize-none outline-none text-white/90 text-xl"
+              className="w-full h-full font-caveat border-2 border-white/60 bg-black/50 rounded-lg resize-none outline-none text-white/90"
               value={text}
               onChange={(e) => {
                 if (e.target.value.length <= MAX_CHARS) {
@@ -107,14 +110,20 @@ export default function Home() {
           </div>
 
           {/* spanish translated text area */}
-          <div className="w-1/2 h-full flex flex-col relative">
+          <div className="w-full md:w-1/2 h-full flex flex-col relative">
 
             <textarea
               readOnly
               placeholder={isLoading ? "Translating..." : "you didn't write anything yet 🫠"}
-              className="w-full h-full font-caveat  border border-black/40 bg-black/50 rounded-lg resize-none outline-none text-white/70 text-xl"
+              className="w-full h-full font-caveat  border-2 border-white/60 bg-black/50 rounded-lg resize-none outline-none text-white/70"
               value={translatedText}
             />
+
+            <div className="absolute top-14 right-3 w-fit h-fit">
+              <button onClick={() => speakText(translatedText, languages.find((l) => l.code === targetLanguage)?.speak || "en-ES" )}>
+                🔊 
+              </button>
+            </div>
 
             <div className="absolute top-3 right-3 w-fit h-fit">
               <Button textToCopy={translatedText} />
