@@ -52,7 +52,7 @@ export default function Button({ textToCopy }: ButtonProps) {
               initial={{ width: 0, opacity: 0, filter: "blur(4px)" }}
               animate={{ width: 44, opacity: 1, filter: "blur(0px)" }} 
               exit={{ width: 0, opacity: 0, filter: "blur(4px)" }}
-              transition={{ duration: 0.45, ease: "easeOut" }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
               className="overflow-hidden whitespace-nowrap text-xs font-sans font-medium "  // had padding - making glitch effect
             >
               {copied ? "Copied" : "Copy..."}
