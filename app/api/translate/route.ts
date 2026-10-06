@@ -4,13 +4,14 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
-    const { text, to = 'es' } = await req.json();
-    if (!text || typeof text !== "string" || !text.trim()) { 
+    const { text, to } = await req.json();
+    if (!text || typeof text !== "string" || !text.trim() || !to) { 
       return NextResponse.json({ formattedText: "", translatedText: "" });
     }
 
     const targetLang = encodeURIComponent(to);
     const queryText = encodeURIComponent(text);
+    console.log(targetLang, queryText);
     const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLang}&dt=t&q=${queryText}`;
     const response = await fetch(url);
     if (!response.ok) {

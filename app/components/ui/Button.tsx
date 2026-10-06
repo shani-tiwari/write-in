@@ -69,7 +69,7 @@ export default function Button({ textToCopy }: ButtonProps) {
                 // animate={{ scale: 1, opacity: 1, filter: "blur(0px)" }}
                 exit={{ scale: 0.7, opacity: 0, filter: "blur(4px)" }}
                 transition={{ duration: 0.2, ease: "easeInOut" }}
-                className="flex items-center justify-center text-emerald-400"
+                className="flex items-center justify-center text-emerald-400 mt-px ml-px"
               >
                 <HugeiconsIcon icon={CheckmarkCircle01Icon} size={18} />
               </motion.span>
@@ -80,7 +80,7 @@ export default function Button({ textToCopy }: ButtonProps) {
                 animate={{ scale: 1, opacity: 1, filter: "blur(0px)" }} 
                 exit={{ scale: 0.7, opacity: 0, filter: "blur(4px)" }}
                 transition={{ duration: 0.2, ease: "easeInOut" }}
-                className="flex items-center justify-center mt-px"
+                className="flex items-center justify-center mt-px ml-px"
               >
                 <HugeiconsIcon icon={Copy01Icon} size={18} />
               </motion.span>
