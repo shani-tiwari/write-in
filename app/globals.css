@@ -11,8 +11,6 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-caveat: var(--font-caveat);
-  --font-indie: var(--font-indie);
-  --font-patrick-hand: var(--font-patrick-hand);
   --font-merienda: var(--font-merienda);
   --font-handlee: var(--font-handlee);
 }
@@ -25,15 +23,24 @@
 }
 
 /* Ensure form controls inherit font families properly */
-input, textarea, button, select {
+input,
+textarea,
+button,
+select {
   font-family: inherit;
 }
 
 textarea {
   line-height: 32px;
-  background-position: 0 7px; 
+  background-position: 0 7px;
 
-  background-image: repeating-linear-gradient(to bottom,transparent 0px,transparent 31px,#898989 31px,#898989 32px);
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 31px,
+    #898989 31px,
+    #898989 32px
+  );
   background-size: 100% 32px;
 }
 
@@ -42,4 +49,3 @@ body {
   color: var(--foreground);
   font-family: var(--font-caveat), cursive, sans-serif;
 }
-

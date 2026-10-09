@@ -4,7 +4,7 @@ export interface TranslationResponse {
   error?: string;
 }
 
-const RATE_LIMIT_MS = 2000;
+const RATE_LIMIT_MS = 1000;
 let lastRequestTime = 0;
 
 /**
@@ -39,7 +39,6 @@ export async function translateText(
   // Update the last request timestamp using JS Date
   lastRequestTime = new Date().getTime();
 
-  console.log('called');
   const response = await fetch("/api/translate", {
     method: "POST",
     headers: { "Content-Type": "application/json" },

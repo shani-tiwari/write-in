@@ -1,0 +1,2 @@
+* preload resource warning 
+- Next.js (next/font/google) automatically generates <link rel="preload" as="font" ...> tags in the document <head> for every font loaded. In your layout, Indie_Flower and Patrick_Hand were initialized and attached to the root <html> tag, but were never rendered anywhere in the DOM on initial load. When the browser detects preloaded resources that are not consumed within a few seconds of the window.load event, it issues this warning.

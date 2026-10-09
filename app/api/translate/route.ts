@@ -1,11 +1,10 @@
-
 import { NextResponse } from "next/server";
 // import translate from "google-translate-api";
 
 export async function POST(req: Request) {
   try {
     const { text, to } = await req.json();
-    if (!text || typeof text !== "string" || !text.trim() || !to) { 
+    if (!text || typeof text !== "string" || !text.trim() || !to) {
       return NextResponse.json({ formattedText: "", translatedText: "" });
     }
 
@@ -17,7 +16,7 @@ export async function POST(req: Request) {
     if (!response.ok) {
       throw new Error(`Google API returned status ${response.status}`);
     };
-    
+
     const data = await response.json();
     // data[0] contains array of translated chunks: [[chunk1, ...], [chunk2, ...]]
     const translatedText = data?.[0]?.map((item: [string]) => item[0]).join("") || "";
@@ -28,7 +27,7 @@ export async function POST(req: Request) {
       .map((line: string) => line.trim())
       .filter(Boolean)
       .join('\n');
-        
+
     return NextResponse.json({ formattedText, translatedText }, { status: 200 });
 
   } catch (error) {
@@ -39,4 +38,4 @@ export async function POST(req: Request) {
     );
   };
 
-}
+};

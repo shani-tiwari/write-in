@@ -8,13 +8,13 @@ import Link from "next/link";
 
 // import { speakText } from "@/services/speakService";
 
-const MAX_CHARS = 250;
+const MAX_CHARS = 500;
 const languages = [
   // { code: "en", label: "English" },
   { code: "es", label: "Spanish", speak: "es-ES" },
   { code: "fr", label: "French", speak: "fr-FR" },
   { code: "de", label: "German", speak: "de-DE" },
-  { code: "ja", label: "Japanese", speak: "ja-JP" },
+  // { code: "ja", label: "Japanese", speak: "ja-JP" },
 ];
 
 
@@ -104,7 +104,7 @@ export default function Home() {
               </button>
             ))
           }
-          <div className="socials absolute right-0  flex md:gap-4 ">
+          <div className="socials absolute right-0  flex gap-2 md:gap-4 ">
             <Link href='https://x.com/shanidevelops' target="_blank">
               <HugeiconsIcon icon={Twitter} size={22} className="text-black/50" />
             </Link>
@@ -136,12 +136,12 @@ export default function Home() {
           </div>
 
           {/* spanish translated text area */}
-          <div className="w-full md:w-1/2 h-full flex flex-col relative">
+          <div className="w-full md:w-1/2 h-full flex flex-col relative ">
 
             <textarea
               readOnly
-              placeholder={isLoading ? "Translating..." : "you didn't write anything yet 🫠"}
-              className="w-full h-full px-2 py-4 md:p-4 font-caveat  border-2 border-black/30 bg-white/10 rounded-lg resize-none outline-none text-black/80"
+              placeholder={isLoading ? "Translating..." : "you didn't write anything yet you didn't  🫠"}
+              className="w-full h-full px-2 py-4 md:py-4 md:pr-14 font-caveat  border-2 border-black/30 bg-white/10 rounded-lg resize-none outline-none text-black/80"
               value={translatedText}
             />
 
@@ -151,7 +151,7 @@ export default function Home() {
               </button>
             </div> */}
 
-            <div className="absolute top-3 right-3 w-fit h-fit">
+            <div className="absolute -top-1 -right-1 md:top-2 md:right-2 w-fit h-fit">
               <Button textToCopy={translatedText} />
             </div>
 
