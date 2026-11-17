@@ -15,7 +15,7 @@ const siteUrl = "https://write-in.shaniweb.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "Write-in — Journal & Language Learning",
+  title: "Write-in — New Way to Learn.",
   description:
     "Write what you think. Learn how to say it. Your thoughts, translated into your next language.",
   applicationName: "Write-in",

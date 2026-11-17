@@ -67,7 +67,7 @@ export default function Home() {
 
 
   return (
-    <main className="w-screen h-screen bg-gray-300 flex items-center justify-center md:p-4 select-none">
+    <main className="w-screen h-screen bg-gray-300 flex items-center justify-center select-none">
       <div id="container" className="w-full h-full bg-gray-200/60 rounded-xl flex flex-col p-2 md:p-4 gap-2 md:gap-4 font-handlee">
 
         <header className="flex gap-6 justify-around items-center text-xs md:text-base text-black/80 font-merienda">
@@ -75,7 +75,7 @@ export default function Home() {
             Write what you think. 
           </h1>
           <p className="hidden md:block bg-white">
-            Your thoughts, translated into your next language.
+            Your thoughts, translated into selected language.
           </p>
           <span className="bg-white">
             Learn how to say it. 
@@ -130,7 +130,7 @@ export default function Home() {
                 }
               }}
             />
-            <div className="absolute bottom-3 right-3 text-sm text-black/70 bg-white/80 leading-5 select-none pointer-events-none">
+            <div className="absolute bottom-3 right-3 text-sm text-white bg-black/80 leading-5 select-none pointer-events-none">
               {text.length}/{MAX_CHARS}
             </div>
           </div>
@@ -156,6 +156,7 @@ export default function Home() {
             </div>
 
           </div>
+
         </div>
 
       </div>

@@ -1,6 +1,6 @@
 
-
- ▶️ i need a text area to write.
+- keep notes section
+- natural conversation -  daily new story auto translated, topics
 
 
 * retention  
@@ -17,13 +17,12 @@ check point after every dot / break between somehow - know specific word's trans
 pronounciator
 notifications - with a reason
 
-- 
- show/hide in translating tab
+
+ show/hide - translating tab
  context aware translation 
  save session - with view/delete option.
- natural conversation options/ideas/questions/explanations - story, essay, prompts, topics
- user reviews section
- mascot - subtle character
+ <!-- user reviews section -->
+ <!-- mascot - subtle character -->
 
 
 --- 
