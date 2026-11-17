@@ -10,7 +10,6 @@ export async function POST(req: Request) {
 
     const targetLang = encodeURIComponent(to);
     const queryText = encodeURIComponent(text);
-    console.log(targetLang, queryText);
     const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLang}&dt=t&q=${queryText}`;
     const response = await fetch(url);
     if (!response.ok) {

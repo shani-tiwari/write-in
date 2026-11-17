@@ -4,6 +4,7 @@
 
 
 * retention  
+* corrected translation of that language (spanish-spanish)
 
  - 
 Navbar

@@ -8,8 +8,8 @@ const RATE_LIMIT_MS = 1000;
 let lastRequestTime = 0;
 
 /**
- * Translates text with a 2000ms rate-limit using JavaScript Date and time methods.
- * Ensures subsequent requests wait if invoked within 2000ms of the previous call.
+ * Translates text with a 1000ms rate-limit using JavaScript Date and time methods.
+ * Ensures subsequent requests wait if invoked within 1000ms of the previous call.
  */
 export async function translateText(
   text: string,
