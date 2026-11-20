@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 // import translate from "google-translate-api";
 
+
+
 export async function POST(req: Request) {
   try {
     const { text, to } = await req.json();

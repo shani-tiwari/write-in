@@ -92,5 +92,3 @@ export default function Button({ textToCopy }: ButtonProps) {
   );
 };
 
-
-// function Icon({icon, color})

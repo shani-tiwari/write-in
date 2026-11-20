@@ -1,13 +1,18 @@
 'use client';
-import { Instagram, Twitter, Bookmark01Icon } from '@hugeicons/core-free-icons';
-import Languages, { languages } from "./components/ui/Languages";
-import { translateText } from "@/services/translateService";
-import SaveButton from "./components/save_data/SaveButton";
+
+import { useCallback, useEffect, useState } from "react";
+import Link from "next/link";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useEffect, useState } from "react";
+import { Instagram, Twitter, Bookmark01Icon } from '@hugeicons/core-free-icons';
+
 import Button from "./components/ui/Button";
 import Header from "./components/ui/Header";
-import Link from "next/link";
+import Languages, { languages } from "./components/ui/Languages";
+import SaveButton from "./components/save_data/SaveButton";
+
+import { translateText } from "@/services/translateService";
+import { storyService } from "@/services/storyService";
+
 
 
 
@@ -15,91 +20,121 @@ import Link from "next/link";
 const MAX_CHARS = 500;
 
 export default function Home() {
-  
   const [text, setText] = useState('I am thinking about -');
   const [translatedText, setTranslatedText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [targetLanguage, setTargetLanguage] = useState("es");
-
   const [isMobile, setIsMobile] = useState(false);
 
+  // Responsive screen-size check
   useEffect(() => {
-    const checkScreen = () => {setIsMobile(window.innerWidth < 768)};
+    const checkScreen = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
     checkScreen();
     window.addEventListener("resize", checkScreen);
     return () => window.removeEventListener("resize", checkScreen);
   }, []);
 
-  function toggleLoading(flag: boolean){
-    setIsLoading(flag)
+  // Reusable function to fetch the daily story
+  const fetchDailyStory = useCallback(async () => {
+    try {
+      const data = await storyService();
+      const storyText = data?.story?.story?.slice(0, 500); 
+      if (storyText) {
+        setText(storyText);
+      }
+    } catch (err) {
+      console.error("Failed to load daily story:", err);
+    }
+  }, []);
+
+  // Fetch daily story on initial mount
+  useEffect(() => {
+    fetchDailyStory();
+  }, [fetchDailyStory]);
+
+  // Reusable function to execute translation with abort signal support
+  const executeTranslation = useCallback(
+    (textToTranslate: string, lang: string, signal?: AbortSignal) => {
+      if (!textToTranslate.trim()) {
+        setTranslatedText('');
+        setIsLoading(false);
+        return;
+      }
+
+      if (textToTranslate.length > MAX_CHARS) {
+        return;
+      }
+
+      setIsLoading(true);
+      translateText(textToTranslate, lang, signal)
+        .then((data) => {
+          if (data.formattedText !== undefined) {
+            setTranslatedText(data.formattedText);
+          }
+        })
+        .catch((err) => {
+          if (err.name !== "AbortError") {
+            console.error("Failed to translate:", err);
+          }
+        })
+        .finally(() => {
+          if (!signal?.aborted) {
+            setIsLoading(false);
+          }
+        });
+    },
+    []
+  );
+
+  // Trigger translation when text or target language changes
+  useEffect(() => {
+    const abortController = new AbortController();
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    executeTranslation(text, targetLanguage, abortController.signal);
+
+    return () => {
+      abortController.abort();
+    };
+  }, [text, targetLanguage, executeTranslation]);
+
+  // Reusable event handlers
+  const handleTextChange = (value: string) => {
+    if (value.length <= MAX_CHARS) {
+      setText(value);
+    }
   };
 
-  useEffect(() => {
-    if (!text.trim()) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setTranslatedText('');
-      toggleLoading(false);
-      return;
+  const handleLanguageChange = (code: string) => {
+    if (text.trim()) {
+      setTranslatedText("");
     }
-    if (text.length > MAX_CHARS) { return; }
+    setTargetLanguage(code);
+  };
 
-    const abortController = new AbortController();
-    toggleLoading(true);
-
-    translateText(
-      text, 
-      targetLanguage, 
-      abortController.signal
-    )
-      .then((data) => {
-        if (data.formattedText !== undefined) {
-          setTranslatedText(data.formattedText);
-        }
-      })
-      .catch((err) => {
-        if (err.name !== "AbortError") {
-          console.error("Failed to translate:", err);
-        }
-      })
-      .finally(() => {
-        if (!abortController.signal.aborted) {
-          toggleLoading(false);
-        }
-      });
-
-    return () => { abortController.abort() };
-  }, [text, targetLanguage]);
-
-  // conditional return below all hooks. 
-  if (isMobile) return <NotAvailable/>
+  // Conditional return below all hooks
+  if (isMobile) return <NotAvailable />;
 
   return (
     <main className="w-screen h-screen bg-gray-300 flex items-center justify-center select-none">
       <div id="container" className="w-full h-full bg-gray-200/60 rounded-xl flex flex-col p-2 md:p-4 gap-2 md:gap-4 font-handlee">
-
-        <Header/>
+        <Header />
 
         {/* Navigation & languages options */}
         <div className="relative flex w-full justify-between items-center px-2">
-
-          <SavedNotes_Btn/>
+          <SavedNotes_Btn />
 
           <Languages
             languages={languages}
             targetLanguage={targetLanguage}
-            onSelectLanguage={(code) => {
-              if (text.trim()) {
-                setTranslatedText("");
-              }
-              setTargetLanguage(code);
-            }}
+            onSelectLanguage={handleLanguageChange}
           />
 
-          <Socials/>
+          <Socials />
         </div>
 
         <div className="flex md:flex-row flex-col justify-between w-full h-full gap-1.5 md:text-xl">
-
           {/* english text area */}
           <div className="w-full md:w-1/2 h-full flex flex-col relative">
             <textarea
@@ -107,78 +142,68 @@ export default function Home() {
               maxLength={MAX_CHARS}
               className="w-full h-full px-2 py-4 md:p-4 font-caveat border border-black/30 bg-white/10 rounded-sm resize-none outline-none text-black"
               value={text}
-              onChange={(e) => {
-                if (e.target.value.length <= MAX_CHARS) {
-                  setText(e.target.value);
-                }
-              }}
+              onChange={(e) => handleTextChange(e.target.value)}
             />
-            <div className="absolute bottom-3 right-3 text-sm text-white bg-black/80 leading-5 select-none pointer-events-none">
-              {text.length}/{MAX_CHARS}
+            <div className="absolute bottom-3 right-3 text-sm text-black flex gap-2 items-center leading-4 select-none">
+              <button className="bg-black/40 px-3 py-1 rounded-sm cursor-pointer hover:bg-black/60 transition-colors" onClick={() => setText('')}>clear area</button>
+              <p>{text.length}/{MAX_CHARS}</p>
             </div>
+
           </div>
 
-          {/* spanish translated text area */}
-          <div className="w-full md:w-1/2 h-full flex flex-col relative ">
-
+          {/* translated text area */}
+          <div className="w-full md:w-1/2 h-full flex flex-col relative">
             <textarea
               readOnly
               placeholder={isLoading ? "Translating..." : "you didn't write anything yet you didn't  🫠"}
-              className="w-full h-full px-2 py-4 md:py-4 md:pr-14 font-caveat  border border-black/30 bg-white/10 rounded-sm resize-none outline-none text-black/80"
+              className="w-full h-full px-2 py-4 md:py-4 md:pr-14 font-caveat border border-black/30 bg-white/10 rounded-sm resize-none outline-none text-black/80"
               value={translatedText}
             />
-
-            {/* <div className="absolute top-14 right-3 w-fit h-fit">
-              <button onClick={() => speakText(translatedText, languages.find((l) => l.code === targetLanguage)?.speak || "en-ES" )}>
-                🔊 
-              </button>
-            </div> */}
 
             <div className="absolute -top-1 -right-1 md:top-2 md:right-2 w-fit h-fit flex items-center gap-2">
               <SaveButton text={text} translated={translatedText} />
               <Button textToCopy={translatedText} />
             </div>
-
           </div>
-
         </div>
-
       </div>
     </main>
   );
-};
+}
 
-function NotAvailable(){
+function NotAvailable() {
   return (
-    <div className="w-full h-screen flex items-center justify-center"><p className="text-3xl">Not Available for phones, Currently.</p></div>
+    <div className="w-full h-screen flex items-center justify-center">
+      <p className="text-3xl">Not Available for phones, Currently.</p>
+    </div>
   );
 }
 
-function Socials(){
+function Socials() {
   return (
     <div className="social flex gap-2">
-            <Link href='https://x.com/shanidevelops' target="_blank">
-              <HugeiconsIcon icon={Twitter} size={18} className="text-black/50" />
-            </Link>
+      <Link href="https://x.com/shanidevelops" target="_blank">
+        <HugeiconsIcon icon={Twitter} size={18} className="text-black/50" />
+      </Link>
 
-            <Link href='https://instagram.com/shani.develops' target="_blank">
-              <HugeiconsIcon icon={Instagram} size={18} className="text-black/50" />
-            </Link>
-          </div>
-  )
+      <Link href="https://instagram.com/shani.develops" target="_blank">
+        <HugeiconsIcon icon={Instagram} size={18} className="text-black/50" />
+      </Link>
+    </div>
+  );
 }
 
-function SavedNotes_Btn(){
+function SavedNotes_Btn() {
   return (
     <div className="flex items-center">
-            <Link
-              href="/saved"
-              className="px-2 md:px-3 py-0.5 rounded-lg transition-colors text-xs md:text-base bg-black/80 text-white hover:bg-black flex items-center gap-1.5 cursor-pointer shadow-xs"
-              title="Saved Entries"
-            >
-              <HugeiconsIcon icon={Bookmark01Icon} size={16} />
-              <span>Saved</span>
-            </Link>
-          </div>
-  )
+      <Link
+        href="/saved"
+        className="px-2 md:px-3 py-0.5 rounded-lg transition-colors text-xs md:text-base bg-black/80 text-white hover:bg-black flex items-center gap-1.5 cursor-pointer shadow-xs"
+        title="Saved Entries"
+      >
+        <HugeiconsIcon icon={Bookmark01Icon} size={16} />
+        <span>Saved</span>
+      </Link>
+    </div>
+  );
 }
