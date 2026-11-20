@@ -18,6 +18,12 @@ export const metadata: Metadata = {
   title: "Write-in — New Way to Learn.",
   description:
     "Write what you think. Learn how to say it. Your thoughts, translated into your next language.",
+  icons: {
+    icon: [
+      { url: "/logo192x192.png", sizes: "192x192", type: "image/png" },
+      { url: "/logo512x512.png", sizes: "512x512", type: "image/png" },
+    ],
+  },
   applicationName: "Write-in",
   authors: [{ name: "Write-in" }],
   keywords: [
@@ -52,7 +58,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     images: [
       {
-        url: "/web-app-manifest-512x512.png",
+        url: "/logo512x512.png",
         width: 512,
         height: 512,
         alt: "Write-in Logo and Preview",
@@ -65,7 +71,7 @@ export const metadata: Metadata = {
     title: "Write-in — Journal & Language Learning",
     description:
       "Write what you think. Learn how to say it. Your thoughts, translated into your next language.",
-    images: ["/web-app-manifest-512x512.png"],
+    images: ["/logo512x512.png"],
   },
   robots: {
     index: true,
