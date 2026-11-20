@@ -29,8 +29,9 @@ export const metadata: Metadata = {
     "Learn Spanish",
     "Learn French",
     "Learn German",
-    "Learn Japanese",
     "Journaling",
+    "live translation",
+    "learn spanish by writing",
   ],
   manifest: "/manifest.json",
   appleWebApp: {

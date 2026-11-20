@@ -1,6 +1,5 @@
 
 
-- keep notes feat
 - for natural conversation - daily new story auto translated, topics
 - notifications in a user set time window - translation service is available
 - corrected translation of that language (spanish-spanish)

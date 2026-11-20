@@ -1,23 +1,18 @@
 'use client';
+import { Instagram, Twitter, Bookmark01Icon } from '@hugeicons/core-free-icons';
+import Languages, { languages } from "./components/ui/Languages";
+import { translateText } from "@/services/translateService";
+import SaveButton from "./components/save_data/SaveButton";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { useEffect, useState } from "react";
 import Button from "./components/ui/Button";
-import SaveButton from "./components/save_data/SaveButton";
-import { translateText } from "@/services/translateService";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { Instagram, Twitter, Bookmark01Icon } from '@hugeicons/core-free-icons';
+import Header from "./components/ui/Header";
 import Link from "next/link";
 
-// import { speakText } from "@/services/speakService";
+
+
 
 const MAX_CHARS = 500;
-const languages = [
-  // { code: "en", label: "English" },
-  { code: "es", label: "Spanish", speak: "es-ES" },
-  { code: "fr", label: "French", speak: "fr-FR" },
-  { code: "de", label: "German", speak: "de-DE" },
-  // { code: "ja", label: "Japanese", speak: "ja-JP" },
-];
-
 
 export default function Home() {
   
@@ -75,70 +70,32 @@ export default function Home() {
     return () => { abortController.abort() };
   }, [text, targetLanguage]);
 
-  // Move the conditional return below all your hooks. 
+  // conditional return below all hooks. 
   if (isMobile) return <NotAvailable/>
 
   return (
     <main className="w-screen h-screen bg-gray-300 flex items-center justify-center select-none">
       <div id="container" className="w-full h-full bg-gray-200/60 rounded-xl flex flex-col p-2 md:p-4 gap-2 md:gap-4 font-handlee">
 
-        <header className="flex gap-6 justify-around items-center text-xs md:text-base text-black/80 font-merienda">
-          <h1 className=" bg-white">
-            Write what you think. 
-          </h1>
-          <p className="hidden md:block bg-white">
-            Your thoughts, translated into selected language.
-          </p>
-          <span className="bg-white">
-            Learn how to say it. 
-          </span>
-        </header>
+        <Header/>
 
         {/* Navigation & languages options */}
-        <div className="relative flex w-full justify-between md:justify-center items-center gap-2 md:gap-3">
-          <div className="md:absolute left-0 flex items-center">
-            <Link
-              href="/saved"
-              className="px-2 md:px-3 py-0.5 rounded-lg transition-colors text-xs md:text-base bg-black/80 text-white hover:bg-black flex items-center gap-1.5 cursor-pointer shadow-xs"
-              title="Saved Entries"
-            >
-              <HugeiconsIcon icon={Bookmark01Icon} size={16} />
-              <span>Saved</span>
-            </Link>
-          </div>
+        <div className="relative flex w-full justify-between items-center px-2">
 
-          <div className="flex items-center gap-2 md:gap-3">
-            {
-              languages.map((language) => (
-                <button
-                  key={language.code}
-                  onClick={() => {
-                    if (text.trim()) {
-                      setTranslatedText("");
-                    }
-                    setTargetLanguage(language.code);
-                  }}
-                  className={`px-2 md:px-3 py-0.5 rounded-lg transition-colors text-xs md:text-base ${
-                    language.code === targetLanguage
-                      ? "bg-black/80 text-white" // Active state: Darker background, white text
-                      : "bg-black/40 text-white/70 hover:bg-black/60 hover:text-white/90"
-                  }`}
-                >
-                  {language.label}
-                </button>
-              ))
-            }
-          </div>
+          <SavedNotes_Btn/>
 
-          <div className="socials absolute right-0 flex gap-2 md:gap-4">
-            <Link href='https://x.com/shanidevelops' target="_blank">
-              <HugeiconsIcon icon={Twitter} size={22} className="text-black/50" />
-            </Link>
+          <Languages
+            languages={languages}
+            targetLanguage={targetLanguage}
+            onSelectLanguage={(code) => {
+              if (text.trim()) {
+                setTranslatedText("");
+              }
+              setTargetLanguage(code);
+            }}
+          />
 
-            <Link href='https://instagram.com/shani.develops' target="_blank">
-              <HugeiconsIcon icon={Instagram} size={22} className="text-black/50" />
-            </Link>
-          </div>
+          <Socials/>
         </div>
 
         <div className="flex md:flex-row flex-col justify-between w-full h-full gap-1.5 md:text-xl">
@@ -148,7 +105,7 @@ export default function Home() {
             <textarea
               placeholder="what's in your mind today ?"
               maxLength={MAX_CHARS}
-              className="w-full h-full px-2 py-4 md:p-4 font-caveat border border-black/30 bg-white/10 rounded-lg resize-none outline-none text-black"
+              className="w-full h-full px-2 py-4 md:p-4 font-caveat border border-black/30 bg-white/10 rounded-sm resize-none outline-none text-black"
               value={text}
               onChange={(e) => {
                 if (e.target.value.length <= MAX_CHARS) {
@@ -167,7 +124,7 @@ export default function Home() {
             <textarea
               readOnly
               placeholder={isLoading ? "Translating..." : "you didn't write anything yet you didn't  🫠"}
-              className="w-full h-full px-2 py-4 md:py-4 md:pr-14 font-caveat  border border-black/30 bg-white/10 rounded-lg resize-none outline-none text-black/80"
+              className="w-full h-full px-2 py-4 md:py-4 md:pr-14 font-caveat  border border-black/30 bg-white/10 rounded-sm resize-none outline-none text-black/80"
               value={translatedText}
             />
 
@@ -197,3 +154,31 @@ function NotAvailable(){
   );
 }
 
+function Socials(){
+  return (
+    <div className="social flex gap-2">
+            <Link href='https://x.com/shanidevelops' target="_blank">
+              <HugeiconsIcon icon={Twitter} size={18} className="text-black/50" />
+            </Link>
+
+            <Link href='https://instagram.com/shani.develops' target="_blank">
+              <HugeiconsIcon icon={Instagram} size={18} className="text-black/50" />
+            </Link>
+          </div>
+  )
+}
+
+function SavedNotes_Btn(){
+  return (
+    <div className="flex items-center">
+            <Link
+              href="/saved"
+              className="px-2 md:px-3 py-0.5 rounded-lg transition-colors text-xs md:text-base bg-black/80 text-white hover:bg-black flex items-center gap-1.5 cursor-pointer shadow-xs"
+              title="Saved Entries"
+            >
+              <HugeiconsIcon icon={Bookmark01Icon} size={16} />
+              <span>Saved</span>
+            </Link>
+          </div>
+  )
+}
