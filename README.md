@@ -1,28 +1,13 @@
 
-- keep notes section
-- natural conversation -  daily new story auto translated, topics
+
+- keep notes feat
+- for natural conversation - daily new story auto translated, topics
+- notifications in a user set time window - translation service is available
+- corrected translation of that language (spanish-spanish)
 
 
-* retention  
-* corrected translation of that language (spanish-spanish)
+- resize tabs
 
- - 
-Navbar
- sentence paragraph linking 
-ideas for phone ui - fixde small scrollable 2 parts on screen always and auto scroll with content
-active users or clicks
-copy translated text
-no. in lines 
-check point after every dot / break between somehow - know specific word's translation
-pronounciator
-notifications - with a reason
-
-
- show/hide - translating tab
- context aware translation 
- save session - with view/delete option.
- <!-- user reviews section -->
- <!-- mascot - subtle character -->
 
 
 --- 
